@@ -1,0 +1,57 @@
+[
+    {
+      "id": 1,
+      "title": "Design Home Page",
+      "description": "Create initial wireframe for home page",
+      "status": "To Do",
+      "priority": "High",
+      "dueDate": "2025-01-31",
+      "notes": "Check with marketing for brand guidelines"
+    },
+    {
+      "id": 2,
+      "title": "Set up Database",
+      "description": "Initialize database schema and run migrations",
+      "status": "In Progress",
+      "priority": "Medium",
+      "dueDate": "2025-02-15",
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "title": "Deploy to Production",
+      "description": "Configure CI/CD pipeline and AWS environment",
+      "status": "Completed",
+      "priority": "Low",
+      "dueDate": "2025-01-20",
+      "notes": "Done ahead of schedule"
+    },
+    {
+      "id": 4,
+      "title": "Implement User Authentication",
+      "description": "Add user registration and login functionality",
+      "status": "To Do",
+      "priority": "High",
+      "dueDate": "2025-01-10",
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "title": "Optimize Performance",
+      "description": "Implement server-side rendering and optimize page load time",
+      "status": "In Progress",
+      "priority": "Medium",
+      "dueDate": "2025-02-05",
+      "notes": ""
+    },
+    {
+      "id": 6,
+      "title": "Add Admin Dashboard",
+      "description": "Design and implement admin dashboard for managing tasks and users",
+      "status": "To Do",
+      "priority": "High",
+      "dueDate": "2025-01-30",
+      "notes": "Needs to be secure and user-friendly"
+    }
+  ]
+  
