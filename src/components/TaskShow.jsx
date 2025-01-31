@@ -33,7 +33,7 @@ const TaskShow = () => {
     <div>
       <h2>{status ? status.replace("-", " ").toUpperCase() + " Tasks" : "All Tasks"}</h2>
 
-      {/* Display Filtered Tasks */}
+     
       <Row gutter={[16, 16]}>
         {filteredTasks.map((task) => (
           <Col key={task.id} xs={24} sm={12} md={8} lg={6}>
