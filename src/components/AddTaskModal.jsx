@@ -1,12 +1,20 @@
+/* eslint react/prop-types: 0 */
 import { Modal, Form, Input, Select, DatePicker, Button } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useEffect, useRef } from "react";
 
 const { Option } = Select;
 
-// eslint-disable-next-line react/prop-types
 const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
-  // Form validation with Formik & Yup
+  const titleInputRef = useRef(null); 
+
+  useEffect(() => {
+    if (isVisible && titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
+  }, [isVisible]);
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -24,31 +32,26 @@ const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
       dueDate: Yup.string().required("Due Date is required"),
     }),
     onSubmit: (values) => {
-    
       const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-      const newTask = {
-        id: storedTasks.length + 1, 
-        ...values,
-      };
+      const newTask = { id: storedTasks.length + 1, ...values };
       storedTasks.push(newTask);
       localStorage.setItem("tasks", JSON.stringify(storedTasks));
 
-    
       handleClose();
       refetch();
     },
   });
 
   return (
-    <Modal
-      title="Add New Task"
-      open={isVisible}
-      onCancel={handleClose}
-      footer={null}
-    >
+    <Modal title="Add New Task" open={isVisible} onCancel={handleClose} footer={null}>
       <Form layout="vertical" onFinish={formik.handleSubmit}>
         <Form.Item label="Title" help={formik.touched.title && formik.errors.title}>
-          <Input name="title" onChange={formik.handleChange} value={formik.values.title} />
+          <Input
+            name="title"
+            onChange={formik.handleChange}
+            value={formik.values.title}
+            ref={titleInputRef} 
+          />
         </Form.Item>
 
         <Form.Item label="Description" help={formik.touched.description && formik.errors.description}>
@@ -72,10 +75,7 @@ const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
         </Form.Item>
 
         <Form.Item label="Due Date">
-          <DatePicker
-            style={{ width: "100%" }}
-            onChange={(date, dateString) => formik.setFieldValue("dueDate", dateString)}
-          />
+          <DatePicker style={{ width: "100%" }} onChange={(date, dateString) => formik.setFieldValue("dueDate", dateString)} />
         </Form.Item>
 
         <Form.Item label="Notes">
