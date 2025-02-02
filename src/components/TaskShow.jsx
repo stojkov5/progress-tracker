@@ -1,22 +1,31 @@
 import { Card, Row, Col } from "antd";
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useOutletContext } from "react-router-dom";
 import { useMemo } from "react";
+import { useParams, useOutletContext } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 const TaskShow = () => {
-  const { status } = useParams(); 
-  const [selectedPriority] = useOutletContext(); 
+  const { status } = useParams();
+  const [selectedPriority] = useOutletContext();
 
-  // Fetch tasks from JSON file
-  const { data: tasks = [], isLoading } = useQuery({
+  
+  const {
+    data: tasks = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
+      const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+      if (storedTasks !== null) return storedTasks;
+
       const response = await fetch("/tasks.json");
-      return response.json();
+      const defaultTasks = await response.json();
+      localStorage.setItem("tasks", JSON.stringify(defaultTasks));
+      return defaultTasks;
     },
   });
 
-  // Filter tasks based on status and priority
+  
   const filteredTasks = useMemo(() => {
     return tasks.filter(
       (task) =>
@@ -32,12 +41,21 @@ const TaskShow = () => {
   return (
     <div>
       <h2>{status ? status.replace("-", " ").toUpperCase() + " Tasks" : "All Tasks"}</h2>
-
-     
       <Row gutter={[16, 16]}>
         {filteredTasks.map((task) => (
           <Col key={task.id} xs={24} sm={12} md={8} lg={6}>
-            <Card title={task.title}>{task.description}</Card>
+            <Card title={task.title}>
+              <p>{task.description}</p>
+              <p>
+                <strong>Priority:</strong> {task.priority}
+              </p>
+              <p>
+                <strong>Status:</strong> {task.status}
+              </p>
+              <p>
+                <strong>Due Date:</strong> {task.dueDate}
+              </p>
+            </Card>
           </Col>
         ))}
       </Row>

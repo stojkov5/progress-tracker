@@ -5,10 +5,10 @@ import TaskShow from "./components/TaskShow";
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // Layout with Sidebar
+    element: <Layout />, 
     children: [
-      { path: "/", element: <TaskShow /> }, // Show all tasks
-      { path: "/tasks/:status", element: <TaskShow /> }, // Show tasks filtered by status
+      { path: "/", element: <TaskShow /> }, 
+      { path: "/tasks/:status", element: <TaskShow /> }, 
     ],
   },
 ]);

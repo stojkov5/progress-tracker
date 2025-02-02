@@ -4,3 +4,6 @@
 .ant-layout-sider-children{
     background-color: white;
 }
+.ant-layout-sider-zero-width-trigger{
+    display: none !important;
+}
