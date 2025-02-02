@@ -1,20 +1,10 @@
-/* eslint react/prop-types: 0 */
 import { Modal, Form, Input, Select, DatePicker, Button } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect, useRef } from "react";
 
 const { Option } = Select;
 
 const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
-  const titleInputRef = useRef(null); 
-
-  useEffect(() => {
-    if (isVisible && titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }, [isVisible]);
-
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -45,16 +35,11 @@ const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
   return (
     <Modal title="Add New Task" open={isVisible} onCancel={handleClose} footer={null}>
       <Form layout="vertical" onFinish={formik.handleSubmit}>
-        <Form.Item label="Title" help={formik.touched.title && formik.errors.title}>
-          <Input
-            name="title"
-            onChange={formik.handleChange}
-            value={formik.values.title}
-            ref={titleInputRef} 
-          />
+        <Form.Item label="Title">
+          <Input name="title" onChange={formik.handleChange} value={formik.values.title} />
         </Form.Item>
 
-        <Form.Item label="Description" help={formik.touched.description && formik.errors.description}>
+        <Form.Item label="Description">
           <Input name="description" onChange={formik.handleChange} value={formik.values.description} />
         </Form.Item>
 
@@ -78,13 +63,7 @@ const AddTaskModal = ({ isVisible, handleClose, refetch }) => {
           <DatePicker style={{ width: "100%" }} onChange={(date, dateString) => formik.setFieldValue("dueDate", dateString)} />
         </Form.Item>
 
-        <Form.Item label="Notes">
-          <Input name="notes" onChange={formik.handleChange} value={formik.values.notes} />
-        </Form.Item>
-
-        <Button type="primary" htmlType="submit">
-          Add Task
-        </Button>
+        <Button type="primary" htmlType="submit">Add Task</Button>
       </Form>
     </Modal>
   );

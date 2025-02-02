@@ -7,3 +7,13 @@
 .ant-layout-sider-zero-width-trigger{
     display: none !important;
 }
+.ant-radio-group{
+    display: flex; 
+}
+.ant-radio-button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: none;
+    border: none;
+}

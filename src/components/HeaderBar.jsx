@@ -1,10 +1,21 @@
+/* eslint react/prop-types: 0 */
 import { Layout, Button } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined } from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const { Header } = Layout;
 
-// eslint-disable-next-line react/prop-types
-const HeaderBar = ({ collapsed, setCollapsed, showModal }) => {
+const HeaderBar = ({ collapsed, setCollapsed }) => {
+  const { authState, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <Header
       style={{
@@ -15,14 +26,24 @@ const HeaderBar = ({ collapsed, setCollapsed, showModal }) => {
         alignItems: "center",
       }}
     >
-      <Button
-        type="text"
-        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        onClick={() => setCollapsed(!collapsed)}
-      />
-      <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>
-        Add Task
-      </Button>
+      <div>
+        <Button
+          type="text"
+          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          onClick={() => setCollapsed(!collapsed)}
+        />
+      </div>
+      <div>
+        {authState ? (
+          <Button type="primary" onClick={handleLogout}>
+            Logout
+          </Button>
+        ) : (
+          <Button type="primary" onClick={() => navigate("/login")}>
+            Login
+          </Button>
+        )}
+      </div>
     </Header>
   );
 };
