@@ -1,16 +1,14 @@
 import { Card, Row, Col } from "antd";
-import { useMemo } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import { Link, useParams, useOutletContext } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 const TaskShow = () => {
   const { status } = useParams();
   const [selectedPriority] = useOutletContext();
 
-  
   const {
     data: tasks = [],
-    refetch,
     isLoading,
   } = useQuery({
     queryKey: ["tasks"],
@@ -25,7 +23,6 @@ const TaskShow = () => {
     },
   });
 
-  
   const filteredTasks = useMemo(() => {
     return tasks.filter(
       (task) =>
@@ -44,17 +41,11 @@ const TaskShow = () => {
       <Row gutter={[16, 16]}>
         {filteredTasks.map((task) => (
           <Col key={task.id} xs={24} sm={12} md={8} lg={6}>
-            <Card title={task.title}>
+            <Card title={<Link to={`/task/${task.id}`}>{task.title}</Link>}>
               <p>{task.description}</p>
-              <p>
-                <strong>Priority:</strong> {task.priority}
-              </p>
-              <p>
-                <strong>Status:</strong> {task.status}
-              </p>
-              <p>
-                <strong>Due Date:</strong> {task.dueDate}
-              </p>
+              <p><strong>Priority:</strong> {task.priority}</p>
+              <p><strong>Status:</strong> {task.status}</p>
+              <p><strong>Due Date:</strong> {task.dueDate}</p>
             </Card>
           </Col>
         ))}
