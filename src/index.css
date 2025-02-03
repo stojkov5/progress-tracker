@@ -1,19 +1,249 @@
 @import "tailwindcss";
+body {
+  background-color: #f4f4f4;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
 
+  transition: background 0.9s, color 0.9s;
+}
 
-.ant-layout-sider-children{
-    background-color: white;
+.page-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
 }
-.ant-layout-sider-zero-width-trigger{
-    display: none !important;
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #8dbfed !important;
 }
-.ant-radio-group{
-    display: flex; 
+.dark-mode .sidebar-container {
+  background-color: #282828 !important;
+}
+
+.ant-menu {
+  background-color: #8dbfed !important;
+}
+.dark-mode .ant-menu {
+  background-color: #282828 !important;
+}
+.ant-menu-item {
+    font-size: 0.875rem;
+    font-size: clamp(0.875rem, 0.7678571428571428rem + 0.5357142857142857vw, 1.25rem);
+  color: #333333;
+}
+.dark-mode .ant-menu-item {
+  color: white !important;
+}
+.dark-mode .ant-menu-item-selected {
+  background-color: unset !important;
+  color: #67eeaa !important;
+}
+.ant-card-head-title a {
+    font-size: 0.875rem;
+    font-size: clamp(0.875rem, 0.7678571428571428rem + 0.5357142857142857vw, 1.25rem);
+  font-weight: bold;
+  color: #1f1f1f;
+}
+.dark-mode .ant-card-head-title {
+  color: #a2f5c6 !important;
+}
+
+.dark-mode .ant-layout-content {
+  background-color: #121212 !important;
+}
+
+.anticon-menu-fold {
+  color: white;
+}
+.anticon-menu-unfold {
+  color: white;
+}
+.ant-layout-sider-children {
+  background-color: #d7d7d7 !important;
+}
+.ant-layout-header {
+  background-color: #8dbfed !important;
+
+  font-size: 0.875rem;
+  font-size: clamp(0.875rem, 0.7678571428571428rem + 0.5357142857142857vw, 1.25rem);
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ant-layout-sider-children {
+  background-color: white;
+}
+.ant-layout-sider-zero-width-trigger {
+  display: none !important;
+}
+.ant-radio-group {
+  display: flex;
 }
 .ant-radio-button-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: none;
-    border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: none;
+  border: none;
+}
+.task-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.task-card:hover {
+  transform: translateY(-3px);
+}
+.dark-mode .ant-table-thead tr th {
+  background-color: #282828 !important;
+}
+.dark-mode .ant-table-cell {
+  color: #a2f5c6 !important;
+}
+.dark-mode .ant-table-cell a {
+  color: #a2f5c6 !important;
+}
+.dark-mode .ant-pagination-item {
+  background-color: #a2f5c6 !important;
+  border: none !important;
+}
+.dark-mode .ant-pagination-item a {
+  color: #1f1f1f !important;
+}
+.dark-mode .anticon-left {
+  color: #a2f5c6 !important;
+}
+.dark-mode .anticon-right {
+  color: #a2f5c6 !important;
+}
+.table-container {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+.add-task-btn {
+  font-weight: 500;
+  background-color: #57a4ec !important;
+
+  color: #181818;
+  border: none;
+}
+
+.add-task-btn:hover {
+  background-color: #389e0d !important;
+}
+
+/* Ant Design Table Styling */
+.ant-table {
+  background: white;
+  border-radius: 8px;
+}
+
+/* Dark Mode */
+.dark-mode body {
+  background-color: #181818 !important;
+  color: white !important;
+}
+
+/* Cards in Dark Mode */
+.dark-mode .task-card {
+  background: #282828 !important;
+  color: white !important;
+  border: 1px solid #3c3c3c;
+}
+
+.dark-mode .task-card:hover {
+  transform: translateY(-3px);
+  background: #333 !important;
+}
+
+/* Table in Dark Mode */
+.dark-mode .table-container {
+  background: #282828 !important;
+  border: 1px solid #3c3c3c;
+}
+
+.dark-mode .ant-table {
+  background: #282828 !important;
+  color: white !important;
+}
+
+/* Buttons in Dark Mode */
+.dark-mode .add-task-btn {
+  background-color: #a2f5c6 !important;
+  border: none;
+  color: #1f1f1f !important;
+}
+
+.dark-mode .add-task-btn:hover {
+  background-color: #57f89c !important;
+}
+
+/* Dark Mode Header */
+.dark-mode .ant-layout-header {
+  background-color: #1f1f1f !important;
+}
+
+/* Dark Mode Toggle Switch */
+.ant-switch-checked {
+  background-color: #a2f5c6 !important;
+}
+.task-category-title {
+    font-size: 0.875rem;
+    font-size: clamp(0.875rem, 0.7678571428571428rem + 0.5357142857142857vw, 1.25rem);
+  font-weight: 500;
+}
+
+.dark-mode .task-category-title {
+  color: #a2f5c6;
+}
+
+.dark-mode .login-btn {
+  background-color: #a2f5c6 !important;
+  color: #1f1f1f !important;
+}
+.login-btn {
+  background-color: #57a4ec !important;
+  color: #181818 !important;
+  font-weight: 500;
+}
+.ant-radio-button-wrapper {
+  background: none;
+  color: #333333;
+  border: none !important;
+  font-size: 0.875rem;
+  font-size: clamp(
+    0.875rem,
+    0.7678571428571428rem + 0.5357142857142857vw,
+    1.25rem
+  );
+}
+.ant-radio-button-wrapper-checked {
+  background: none !important;
+  border: none !important;
+}
+
+.dark-mode .ant-radio-button-wrapper {
+  color: #a2f5c6;
+}
+.dark-mode .ant-radio-button-wrapper:hover {
+  background: none;
+  color: #36f187;
+  border: none !important;
+}
+.dark-mode .ant-radio-button-wrapper-checked {
+  background: none !important;
+  color: #36f187 !important;
+  border: none !important;
+}
+
+.dark-mode .ant-table-cell-row-hover{
+    background-color: #333 !important;
 }

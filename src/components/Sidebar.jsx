@@ -26,14 +26,15 @@ const sidebarItems = [
     icon: <CheckCircleOutlined />,
     label: <Link to="/tasks/completed">Completed</Link>,
   },
+  
 ];
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({ collapsed, setSelectedPriority }) => {
   return (
     <Sider collapsedWidth="0" collapsible collapsed={collapsed}>
-      <div className="sidebar-logo" />
-      <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]} items={sidebarItems} />
+     <div className="sidebar-container">
+     <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]} items={sidebarItems} />
       {!collapsed && (
         <div style={{ padding: "16px" }}>
           <Select
@@ -48,6 +49,8 @@ const Sidebar = ({ collapsed, setSelectedPriority }) => {
           </Select>
         </div>
       )}
+     </div>
+     
     </Sider>
   );
 };

@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
-import { Layout, Button } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Layout, Button,Switch } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined, SunOutlined,MoonOutlined} from "@ant-design/icons";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const { Header } = Layout;
 
 const HeaderBar = ({ collapsed, setCollapsed }) => {
-  const { authState, logout } = useContext(AuthContext);
+  const { authState, logout, darkMode, toggleDarkMode } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -20,7 +20,7 @@ const HeaderBar = ({ collapsed, setCollapsed }) => {
     <Header
       style={{
         padding: "0 16px",
-        background: "#fff",
+        background: "#8dbfed",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -33,13 +33,20 @@ const HeaderBar = ({ collapsed, setCollapsed }) => {
           onClick={() => setCollapsed(!collapsed)}
         />
       </div>
+      
+       <Switch
+          checked={darkMode}
+          onChange={toggleDarkMode}
+          checkedChildren={<MoonOutlined />}
+          unCheckedChildren={<SunOutlined />}
+        />
       <div>
         {authState ? (
-          <Button type="primary" onClick={handleLogout}>
+          <Button className="login-btn" type="primary" onClick={handleLogout}>
             Logout
           </Button>
         ) : (
-          <Button type="primary" onClick={() => navigate("/login")}>
+          <Button className="login-btn" type="primary" onClick={() => navigate("/login")}>
             Login
           </Button>
         )}
