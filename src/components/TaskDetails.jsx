@@ -3,8 +3,10 @@ import { Card, Button, Modal } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import EditTaskModal from "/src/components/EditTaskModal";
-
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 const TaskDetails = () => {
+  const { darkMode } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -29,7 +31,7 @@ const TaskDetails = () => {
   };
 
   return (
-    <Card
+    <Card className={darkMode ? 'dark-mode page-container' : 'page-container'}
       title={task.title}
       style={{ maxWidth: 600, margin: "auto", marginTop: 20 }}
     >
@@ -50,11 +52,11 @@ const TaskDetails = () => {
       </p>
 
       <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-        <Button type="primary" onClick={() => setIsEditModalVisible(true)}>
+        <Button className="add-task-btn" type="primary" onClick={() => setIsEditModalVisible(true)}>
           Edit Task
         </Button>
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
-        <Button type="danger" onClick={() => setIsDeleteModalVisible(true)}>
+        <Button className="add-task-btn" onClick={() => navigate(-1)}>Go Back</Button>
+        <Button className="add-task-btn" type="danger" onClick={() => setIsDeleteModalVisible(true)}>
           Delete Task
         </Button>
       </div>

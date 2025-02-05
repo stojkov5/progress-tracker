@@ -1,4 +1,4 @@
-import { Card, Row, Col, Table, Radio, Button } from "antd";
+import { Card, Row, Col, Table, Radio, Button, Checkbox } from "antd";
 import { CiViewTable, CiGrid41 } from "react-icons/ci";
 import { useMemo, useState } from "react";
 import {
@@ -7,7 +7,7 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import AddTaskModal from "./AddTaskModal";
@@ -17,6 +17,7 @@ const TaskShow = () => {
   const [selectedPriority] = useOutletContext();
   const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [viewMode, setViewMode] = useState(
     () => localStorage.getItem("viewMode") || "cards"
@@ -56,7 +57,7 @@ const TaskShow = () => {
 
   if (!authState) {
     return (
-      <p style={{ textAlign: "center", marginTop: "20px" }}>
+      <p className="login-text">
         Login to show tasks
       </p>
     );
@@ -65,18 +66,39 @@ const TaskShow = () => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+
+ 
+  const toggleTaskCompletion = (taskId, event) => {
+    event.stopPropagation(); 
+
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        if (task.status !== "Completed") {
+          return { ...task, previousStatus: task.status, status: "Completed" };
+        } else {
+          return { ...task, status: task.previousStatus || "To Do" };
+        }
+      }
+      return task;
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    queryClient.invalidateQueries(["tasks"]); 
+  };
+
   const getPriorityTextStyle = (priority) => {
     switch (priority) {
       case "High":
-        return { color: "#ff4d4f", fontWeight: "bold" }; // 🔴 Red Text
+        return { color: "#ff4d4f", fontWeight: "bold" }; 
       case "Medium":
-        return { color: "#ffa940", fontWeight: "bold" }; // 🟠 Orange Text
+        return { color: "#ffa940", fontWeight: "bold" }; 
       case "Low":
-        return { color: "#52c41a", fontWeight: "bold" }; // 🟢 Green Text
+        return { color: "#52c41a", fontWeight: "bold" }; 
       default:
-        return { color: "#595959" }; // Default Gray
+        return { color: "#595959" }; 
     }
   };
+
   const getPriorityStyle = (priority) => {
     switch (priority) {
       case "High":
@@ -92,12 +114,23 @@ const TaskShow = () => {
 
   const columns = [
     {
+      title: "Mark",
+      dataIndex: "status",
+      key: "status",
+      render: (_, record) => (
+        <Checkbox
+          checked={record.status === "Completed"}
+          onClick={(e) => toggleTaskCompletion(record.id, e)}
+          className="custom-checkbox"
+        />
+      ),
+    },
+    {
       title: "Title",
       dataIndex: "title",
       key: "title",
       render: (text, record) => <Link to={`/task/${record.id}`}>{text}</Link>,
     },
-
     {
       title: "Priority",
       dataIndex: "priority",
@@ -153,24 +186,36 @@ const TaskShow = () => {
       {viewMode === "cards" && (
         <Row gutter={[16, 16]}>
           {filteredTasks.map((task) => (
-            <Col key={task.id} xs={24} sm={12} md={8} lg={8}>
-              <Link to={`/task/${task.id}`}>
-                <Card
-                  style={getPriorityStyle(task.priority)}
-                  className="task-card"
-                  title={task.title}
-                >
-                  <p>
-                    <strong>Priority:</strong> {task.priority}
-                  </p>
-                  <p>
-                    <strong>Status:</strong> {task.status}
-                  </p>
-                  <p>
-                    <strong>Due Date:</strong> {task.dueDate}
-                  </p>
-                </Card>
-              </Link>
+            <Col key={task.id} xs={24} sm={12} md={8} lg={6}>
+              <Card
+                style={getPriorityStyle(task.priority)}
+                className="task-card"
+                title={
+                  <div className="">
+                    <Checkbox
+                      checked={task.status === "Completed"}
+                      onClick={(e) => toggleTaskCompletion(task.id, e)}
+                      className="custom-checkbox"
+                    />
+                    <Link className="task-card-title" to={`/task/${task.id}`}>{task.title}</Link>
+                  </div>
+                }
+                onClick={() => navigate(`/task/${task.id}`)}
+              >
+               
+                <p>
+                  <strong>Priority:</strong>{" "}
+                  <span style={getPriorityTextStyle(task.priority)}>
+                    {task.priority}
+                  </span>
+                </p>
+                <p>
+                  <strong>Status:</strong> {task.status}
+                </p>
+                <p>
+                  <strong>Due Date:</strong> {task.dueDate}
+                </p>
+              </Card>
             </Col>
           ))}
         </Row>
@@ -183,9 +228,6 @@ const TaskShow = () => {
             columns={columns}
             scroll={{ x: "max-content" }}
             rowKey="id"
-            onRow={(record) => ({
-              onClick: () => navigate(`/task/${record.id}`),
-            })}
           />
         </div>
       )}
