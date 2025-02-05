@@ -153,7 +153,7 @@ const TaskShow = () => {
 
   return (
     <div className="page-container">
-      <div
+      <div className="task-show-header"
         style={{
           marginBottom: 16,
           display: "flex",

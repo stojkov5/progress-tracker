@@ -163,6 +163,9 @@ body {
   margin-left: 5%;
   color: #181818;
   font-weight: 500;
+  overflow: hidden;      
+  white-space: nowrap;    
+  text-overflow: ellipsis;
 }
 
 .dark-mode .task-card-title {
@@ -304,4 +307,26 @@ body {
 }
 .dark-mode .login-text {
   color: #a2f5c6;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+}
+.header-title {
+  font-size: clamp(0.875rem, 0.8rem + 0.5vw, 1.25rem);
+  font-weight: 500;
+}
+.dark-mode .header-title{
+  color:#A2F5C6;
+}
+
+@media (max-width:500px) {
+  .header-title {
+    display: none;
+  }
+  .task-show-header {
+    display: flex;
+    flex-direction: column;
+  }
 }

@@ -34,13 +34,17 @@ const HeaderBar = ({ collapsed, setCollapsed }) => {
         />
       </div>
       
-       <Switch
+       <div>
+         <h1 className="header-title">Progress Tracker</h1>
+       </div>
+      <div className="header-right"> 
+      <Switch
           checked={darkMode}
           onChange={toggleDarkMode}
           checkedChildren={<MoonOutlined />}
           unCheckedChildren={<SunOutlined />}
         />
-      <div>
+        
         {authState ? (
           <Button className="login-btn" type="primary" onClick={handleLogout}>
             Logout
